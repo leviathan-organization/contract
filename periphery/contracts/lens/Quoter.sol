@@ -24,7 +24,7 @@ contract Quoter is IQuoter, ILeviathanSwapCallback, PeripheryImmutableState {
     /// @dev Transient storage variable used to check a safety condition in exact output swaps.
     uint256 private amountOutCached;
 
-    constructor(address _deployer, address _factory, address _WMNT) PeripheryImmutableState(_deployer, _factory, _WMNT) {}
+    constructor(address _deployer, address _factory, address _WETH) PeripheryImmutableState(_deployer, _factory, _WETH) {}
 
     function getPool(
         address tokenA,

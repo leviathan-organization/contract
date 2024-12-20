@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from 'ethers5'
 
 export const MaxUint128 = BigNumber.from(2).pow(128).sub(1)
 

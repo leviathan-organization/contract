@@ -24,14 +24,14 @@ async function main() {
     );
     console.log("QuoterV2:", contractAddresses.QuoterV2);
 
-    let wmntAddress = await QuoterV2.callStatic.WMNT();
-    console.log("wmntAddress:", wmntAddress);
+    let wethAddress = await QuoterV2.WETH();
+    console.log("wethAddress:", wethAddress);
 
-    let path = encodePath([wmntAddress, leviathanAddress], [FeeAmount.LOW]);
+    let path = encodePath([wethAddress, leviathanAddress], [FeeAmount.LOW]);
     console.log("path:", path);
 
-   let res = await QuoterV2.callStatic.quoteExactInput(
-     encodePath([wmntAddress, leviathanAddress], [FeeAmount.LOW]),
+   let res = await QuoterV2.quoteExactInput(
+     encodePath([wethAddress, leviathanAddress], [FeeAmount.LOW]),
      "100000000000000000"
    );
 

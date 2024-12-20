@@ -10,6 +10,6 @@ interface IPeripheryImmutableState {
     /// @return Returns the address of the Leviathan factory
     function factory() external view returns (address);
 
-    /// @return Returns the address of WMNT
-    function WMNT() external view returns (address);
+    /// @return Returns the address of WETH
+    function WETH() external view returns (address);
 }

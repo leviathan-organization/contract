@@ -3,7 +3,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 const utils = require("../common/utils");
 
 const leviathanAddress = "0x74a0E7118480bdfF5f812c7a879a41db09ac2c39";
-let wmntAddress = "";
+let wethAddress = "";
 
 async function main() {
    const networkName = await network.name;
@@ -11,34 +11,34 @@ async function main() {
 
   const [owner] = await ethers.getSigners();
   let contractAddresses = utils.getContractAddresses(networkName,"");
-  wmntAddress = contractAddresses.WMNT;
+  wethAddress = contractAddresses.WETH;
 
   const swapRouter = await ethers.getContractAt(
     "SwapRouter",
     contractAddresses.SwapRouter
   );
 
-  const MNT = await ethers.getContractAt("WMNT", wmntAddress);
-  let mammApproveTx = await MNT.approve(
+  const ETH = await ethers.getContractAt("WETH", wethAddress);
+  let mammApproveTx = await ETH.approve(
     contractAddresses.SwapRouter,
-    BigNumber.from("10000000000000000000000000000")
+      "10000000000000000000000000000"
   );
-  console.log("MNT approve tx:", mammApproveTx.hash);
+  console.log("ETH approve tx:", mammApproveTx.hash);
 
   const LEVIATHAN = await ethers.getContractAt("SelfSufficientERC20", leviathanAddress);
   await LEVIATHAN.approve(
     contractAddresses.SwapRouter,
-    BigNumber.from("10000000000000000000000000000")
+      "10000000000000000000000000000"
   );
   console.log("approve success");
 
   await swapRouter.exactInputSingle({
-    tokenIn: wmntAddress,
+    tokenIn: wethAddress,
     tokenOut: leviathanAddress,
     fee: 100,
     recipient: owner.address,
     deadline: 999999999,
-    amountIn: BigNumber.from("11000000000000000000"),
+    amountIn: "11000000000000000000",
     amountOutMinimum: 0,
     sqrtPriceLimitX96: 0,
   });

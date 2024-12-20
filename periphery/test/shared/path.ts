@@ -1,4 +1,4 @@
-import { utils } from 'ethers'
+import { utils } from 'ethers5'
 import { FeeAmount } from './constants'
 
 const ADDR_SIZE = 20

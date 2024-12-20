@@ -1,5 +1,5 @@
 import { bytecode } from '../../../core/artifacts/contracts/LeviathanPool.sol/LeviathanPool.json'
-import { utils } from 'ethers'
+import { utils } from 'ethers5'
 
 export const POOL_BYTECODE_HASH = utils.keccak256(bytecode)
 

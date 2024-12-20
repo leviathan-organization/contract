@@ -71,9 +71,9 @@ contract NonfungiblePositionManager is
     constructor(
         address _deployer,
         address _factory,
-        address _WMNT,
+        address _WETH,
         address _tokenDescriptor_
-    ) ERC721Permit('Leviathan Positions NFT-V1', 'LEVIATHAN-V3-POS', '1') PeripheryImmutableState(_deployer, _factory, _WMNT) {
+    ) ERC721Permit('Leviathan Positions NFT-V1', 'LEVIATHAN-V3-POS', '1') PeripheryImmutableState(_deployer, _factory, _WETH) {
         _tokenDescriptor = _tokenDescriptor_;
     }
 

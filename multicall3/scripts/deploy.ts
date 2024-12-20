@@ -1,4 +1,4 @@
-import { ethers, upgrades, network } from "hardhat";
+import { ethers, network } from "hardhat";
 const utils = require("../../common/utils");
 import dotenv from "dotenv";
 dotenv.config();
@@ -9,10 +9,18 @@ async function main() {
 
   const Multicall3 = await ethers.getContractFactory("Multicall3");
   const multicall3 = await Multicall3.deploy();
-  console.log("multicall3", multicall3.address);
+  await multicall3.waitForDeployment();
+  console.log("multicall3", multicall3.target);
+
+
+  const GasMulticallV2 = await ethers.getContractFactory("GasMulticallV2");
+  const gasMulticall = await GasMulticallV2.deploy();
+  await gasMulticall.waitForDeployment();
+  console.log("gasMulticall", gasMulticall.target);
 
   let contractAddresses = {
-    Multicall3: multicall3.address
+    Multicall3: multicall3.target,
+    GasMulticall: gasMulticall.target,
   };
   await utils.writeContractAddresses(networkName, contractAddresses);
 }

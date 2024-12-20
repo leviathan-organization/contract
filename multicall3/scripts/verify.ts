@@ -14,6 +14,13 @@ async function main() {
     contract: "contracts/Multicall3.sol:Multicall3",
     constructorArguments: [],
   });
+
+  await hre.run("verify:verify", {
+    address: contractAddresses.GasMulticall,
+    contract: "contracts/GasMulticallV2.sol:GasMulticallV2",
+    constructorArguments: [],
+  });
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere

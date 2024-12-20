@@ -1,5 +1,5 @@
 import bn from 'bignumber.js'
-import { BigNumber, BigNumberish } from 'ethers'
+import { BigNumber, BigNumberish } from 'ethers5'
 
 bn.config({ EXPONENTIAL_AT: 999999, DECIMAL_PLACES: 40 })
 

@@ -17,55 +17,57 @@ async function main() {
   let contractAddresses = utils.getContractAddresses(networkName, "");
   console.log("periphery contract addresses:", contractAddresses);
 
-  let WMNT = contractAddresses.WMNT;
+  let WETH = contractAddresses.WETH;
 
-  await hre.run("verify:verify", {
-    address: contractAddresses.Quoter,
-    contract: "contracts/lens/Quoter.sol:Quoter",
-    constructorArguments: [coreContractAddresses.LeviathanPoolDeployer, coreContractAddresses.LeviathanFactory, WMNT],
-  });
-
+  // await hre.run("verify:verify", {
+  //   address: contractAddresses.Quoter,
+  //   contract: "contracts/lens/Quoter.sol:Quoter",
+  //   constructorArguments: [coreContractAddresses.LeviathanPoolDeployer, coreContractAddresses.LeviathanFactory, WETH],
+  // });
+  //
   // await hre.run("verify:verify", {
   //   address: contractAddresses.QuoterV2,
   //   contract: "contracts/lens/QuoterV2.sol:QuoterV2",
-  //   constructorArguments: [coreContractAddresses.LeviathanPoolDeployer, coreContractAddresses.LeviathanFactory, WMNT],
+  //   constructorArguments: [coreContractAddresses.LeviathanPoolDeployer, coreContractAddresses.LeviathanFactory, WETH],
   // });
-  // return
+  //
+  // await hre.run("verify:verify", {
+  //   address: contractAddresses.SwapRouter,
+  //   contract: "contracts/SwapRouter.sol:SwapRouter",
+  //   constructorArguments: [
+  //     coreContractAddresses.LeviathanPoolDeployer,
+  //     coreContractAddresses.LeviathanFactory,
+  //     WETH,
+  //   ],
+  // });
+  //
+  // await hre.run("verify:verify", {
+  //   address: contractAddresses.TickLens,
+  //   contract: "contracts/lens/TickLens.sol:TickLens",
+  //   constructorArguments: [],
+  // });
 
-  await hre.run("verify:verify", {
-    address: contractAddresses.SwapRouter,
-    contract: "contracts/SwapRouter.sol:SwapRouter",
-    constructorArguments: [
-      coreContractAddresses.LeviathanPoolDeployer,
-      coreContractAddresses.LeviathanFactory,
-      WMNT,
-    ],
-  });
+  // await hre.run("verify:verify", {
+  //   address: contractAddresses.NonfungiblePositionManager,
+  //   contract:
+  //     "contracts/NonfungiblePositionManager.sol:NonfungiblePositionManager",
+  //   constructorArguments: [
+  //     coreContractAddresses.LeviathanPoolDeployer,
+  //     coreContractAddresses.LeviathanFactory,
+  //     WETH,
+  //     contractAddresses.NonfungibleTokenPositionDescriptor,
+  //   ],
+  // });
+  //
+  // await hre.run("verify:verify", {
+  //   address: contractAddresses.NonfungibleTokenPositionDescriptor,
+  //   contract:
+  //     "contracts/NonfungibleTokenPositionDescriptorOffChain.sol:NonfungibleTokenPositionDescriptorOffChain",
+  //   constructorArguments: [],
+  // });
 
-  await hre.run("verify:verify", {
-    address: contractAddresses.TickLens,
-    contract: "contracts/lens/TickLens.sol:TickLens",
-    constructorArguments: [],
-  });
 
-  await hre.run("verify:verify", {
-    address: contractAddresses.NonfungiblePositionManager,
-    contract:
-      "contracts/NonfungiblePositionManager.sol:NonfungiblePositionManager",
-    constructorArguments: [
-      coreContractAddresses.LeviathanPoolDeployer,
-      coreContractAddresses.LeviathanFactory,
-      WMNT,
-      contractAddresses.NonfungibleTokenPositionDescriptor,
-    ],
-  });
 
-  await hre.run("verify:verify", {
-    address: contractAddresses.NonfungibleTokenPositionDescriptor,
-    contract:
-      "contracts/NonfungibleTokenPositionDescriptorOffChain.sol:NonfungibleTokenPositionDescriptorOffChain",
-    constructorArguments: [],
-  });
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GNU GENERAL PUBLIC LICENSE V3
 pragma solidity =0.7.6;
 
-contract WMNT {
-    string public name = "Wrapped MNT";
-    string public symbol = "WMNT";
+contract WETH {
+    string public name = "Wrapped ETH";
+    string public symbol = "WETH";
     uint8 public decimals = 18;
 
     event Approval(address indexed src, address indexed guy, uint256 wad);

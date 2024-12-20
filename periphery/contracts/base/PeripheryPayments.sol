@@ -4,7 +4,7 @@ pragma solidity >=0.7.5;
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
 import '../interfaces/IPeripheryPayments.sol';
-import '../interfaces/external/IWMNT.sol';
+import '../interfaces/external/IWETH.sol';
 
 import '../libraries/TransferHelper.sol';
 
@@ -12,17 +12,17 @@ import './PeripheryImmutableState.sol';
 
 abstract contract PeripheryPayments is IPeripheryPayments, PeripheryImmutableState {
     receive() external payable {
-        require(msg.sender == WMNT, 'Not WMNT');
+        require(msg.sender == WETH, 'Not WETH');
     }
 
     /// @inheritdoc IPeripheryPayments
-    function unwrapWMNT(uint256 amountMinimum, address recipient) public payable override {
-        uint256 balanceWMNT = IWMNT(WMNT).balanceOf(address(this));
-        require(balanceWMNT >= amountMinimum, 'Insufficient WMNT');
+    function unwrapWETH(uint256 amountMinimum, address recipient) public payable override {
+        uint256 balanceWETH = IWETH(WETH).balanceOf(address(this));
+        require(balanceWETH >= amountMinimum, 'Insufficient WETH');
 
-        if (balanceWMNT > 0) {
-            IWMNT(WMNT).withdraw(balanceWMNT);
-            TransferHelper.safeTransferMNT(recipient, balanceWMNT);
+        if (balanceWETH > 0) {
+            IWETH(WETH).withdraw(balanceWETH);
+            TransferHelper.safeTransferETH(recipient, balanceWETH);
         }
     }
 
@@ -41,8 +41,8 @@ abstract contract PeripheryPayments is IPeripheryPayments, PeripheryImmutableSta
     }
 
     /// @inheritdoc IPeripheryPayments
-    function refundMNT() external payable override {
-        if (address(this).balance > 0) TransferHelper.safeTransferMNT(msg.sender, address(this).balance);
+    function refundETH() external payable override {
+        if (address(this).balance > 0) TransferHelper.safeTransferETH(msg.sender, address(this).balance);
     }
 
     /// @param token The token to pay
@@ -55,10 +55,10 @@ abstract contract PeripheryPayments is IPeripheryPayments, PeripheryImmutableSta
         address recipient,
         uint256 value
     ) internal {
-        if (token == WMNT && address(this).balance >= value) {
-            // pay with WMNT
-            IWMNT(WMNT).deposit{value: value}(); // wrap only what is needed to pay
-            IWMNT(WMNT).transfer(recipient, value);
+        if (token == WETH && address(this).balance >= value) {
+            // pay with WETH
+            IWETH(WETH).deposit{value: value}(); // wrap only what is needed to pay
+            IWETH(WETH).transfer(recipient, value);
         } else if (payer == address(this)) {
             // pay with tokens already in the contract (for the exact input multihop case)
             TransferHelper.safeTransfer(token, recipient, value);

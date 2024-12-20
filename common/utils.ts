@@ -2,23 +2,39 @@ const fs = require("fs");
 
 
 function getContractAddresses(network, filename) {
-  if (filename == "") {
-    return JSON.parse(
-      fs.readFileSync(`${process.cwd()}/deployments/${network}.json`).toString()
-    );
-  }
+    let json = ""
+    try {
+        if (filename == "") {
+            json = fs.readFileSync(`${process.cwd()}/deployments/${network}.json`).toString();
 
-  return JSON.parse(fs.readFileSync(filename).toString());
+        }else {
+            json = fs.readFileSync(filename).toString()
+        }
+    }catch (e) {
+        console.warn("json not found",network,filename)
+    }
+
+    if (json == "" || json == undefined) {
+        return {}
+    }
+
+    return JSON.parse(json);
 }
 
 function writeContractAddresses(network, contractAddresses) {
-  fs.writeFileSync(
-    `${process.cwd()}/deployments/${network}.json`,
-    JSON.stringify(contractAddresses, null, 2) // Indent 2 spaces
-  );
+    let file = `${process.cwd()}/deployments/${network}.json`;
+    let json = getContractAddresses(network, '')
+    let newJson = {
+        ...json,
+        ...contractAddresses
+    }
+    fs.writeFileSync(
+        file,
+        JSON.stringify(newJson, null, 2) // Indent 2 spaces
+    );
 }
 
 module.exports = {
-  getContractAddresses,
-  writeContractAddresses,
+    getContractAddresses,
+    writeContractAddresses,
 };

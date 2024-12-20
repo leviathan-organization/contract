@@ -7,14 +7,14 @@ import '@leviathanswap/core/contracts/libraries/LowGasSafeMath.sol';
 import './PeripheryPayments.sol';
 import '../interfaces/IPeripheryPaymentsWithFee.sol';
 
-import '../interfaces/external/IWMNT.sol';
+import '../interfaces/external/IWETH.sol';
 import '../libraries/TransferHelper.sol';
 
 abstract contract PeripheryPaymentsWithFee is PeripheryPayments, IPeripheryPaymentsWithFee {
     using LowGasSafeMath for uint256;
 
     /// @inheritdoc IPeripheryPaymentsWithFee
-    function unwrapWMNTWithFee(
+    function unwrapWETHWithFee(
         uint256 amountMinimum,
         address recipient,
         uint256 feeBips,
@@ -22,14 +22,14 @@ abstract contract PeripheryPaymentsWithFee is PeripheryPayments, IPeripheryPayme
     ) public payable override {
         require(feeBips > 0 && feeBips <= 100);
 
-        uint256 balanceWMNT = IWMNT(WMNT).balanceOf(address(this));
-        require(balanceWMNT >= amountMinimum, 'Insufficient WMNT');
+        uint256 balanceWETH = IWETH(WETH).balanceOf(address(this));
+        require(balanceWETH >= amountMinimum, 'Insufficient WETH');
 
-        if (balanceWMNT > 0) {
-            IWMNT(WMNT).withdraw(balanceWMNT);
-            uint256 feeAmount = balanceWMNT.mul(feeBips) / 10_000;
-            if (feeAmount > 0) TransferHelper.safeTransferMNT(feeRecipient, feeAmount);
-            TransferHelper.safeTransferMNT(recipient, balanceWMNT - feeAmount);
+        if (balanceWETH > 0) {
+            IWETH(WETH).withdraw(balanceWETH);
+            uint256 feeAmount = balanceWETH.mul(feeBips) / 10_000;
+            if (feeAmount > 0) TransferHelper.safeTransferETH(feeRecipient, feeAmount);
+            TransferHelper.safeTransferETH(recipient, balanceWETH - feeAmount);
         }
     }
 

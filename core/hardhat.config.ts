@@ -1,6 +1,5 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-import "@nomiclabs/hardhat-etherscan";
 import "hardhat-gas-reporter";
 import "hardhat-contract-sizer";
 import dotenv from "dotenv";
@@ -21,55 +20,45 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
-    mantleTestnet: {
-      url: process.env.MANTLE_TESTNET_URL || "",
+    'seplia-ink': {
+      gas: 10000000,
+      gasPrice: 200000000,
+      url: process.env.SEPOLIA_INK_RPC || "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+        process.env.SEPOLIA_INK_PRIVATE_KEY !== undefined ? [process.env.SEPOLIA_INK_PRIVATE_KEY] : [],
     },
-    mantleMainnet: {
-      url: process.env.MANTLE_URL || "",
+    'ink': {
+      url: process.env.INK_RPC || "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
-    mantleSepoliaTestnet: {
-      url: process.env.MANTLE_SEPOLIA_TESTNET_URL || "",
-      gasPrice: 50000000000,
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
+          process.env.INK_PRIVATE_KEY !== undefined ? [process.env.INK_PRIVATE_KEY] : [],
+    }
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
     currency: "USD",
   },
   etherscan: {
-    // apiKey: process.env.MANTLE_API_KEY,
-    apiKey: process.env.MANTLESCAN_API_KEY,
+    apiKey:  {
+      "seplia-ink":   process.env.SEPOLIA_INK_API_KEY,
+      "ink":   process.env.INK_API_KEY,
+    },
     customChains: [
       {
-        network: "mantleTestnet",
-        chainId: 5001,
+        network: "seplia-ink",
+        chainId: 763373,
         urls: {
-          apiURL: "https://explorer.testnet.mantle.xyz/api",
-          browserURL: "https://explorer.testnet.mantle.xyz/",
+          apiURL: "https://explorer-sepolia.inkonchain.com/api",
+          browserURL: "https://explorer-sepolia.inkonchain.com",
         },
       },
       {
-        network: "mantleSepoliaTestnet",
-        chainId: 5003,
+        network: "ink",
+        chainId: 57073,
         urls: {
-          apiURL: "https://explorer.sepolia.mantle.xyz/api",
-          browserURL: "https://explorer.sepolia.mantle.xyz/",
+          apiURL: "https://explorer.inkonchain.com/api",
+          browserURL: "https://explorer.inkonchain.com",
         },
-      },
-      {
-        network: "mantleMainnet",
-        chainId: 5000,
-        urls: {
-          apiURL: "https://explorer.mantle.xyz/api",
-          browserURL: "https://explorer.mantle.xyz/",
-        },
-      },
+      }
     ],
   },
 };

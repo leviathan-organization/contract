@@ -24,8 +24,8 @@ contract PairFlash is ILeviathanFlashCallback, PeripheryPayments {
         ISwapRouter _swapRouter,
         address _deployer,
         address _factory,
-        address _WMNT
-    ) PeripheryImmutableState(_deployer, _factory, _WMNT) {
+        address _WETH
+    ) PeripheryImmutableState(_deployer, _factory, _WETH) {
         swapRouter = _swapRouter;
     }
 

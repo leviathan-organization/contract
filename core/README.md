@@ -22,12 +22,12 @@ import {
 ```
 
 This will ensure that you are testing against the same bytecode that is deployed to
-mainnet and public testnets, and all PancakeSwap code will correctly interoperate with
+mainnet and public testnets, and all Leviathanswap code will correctly interoperate with
 your local deployment.
 
 ## Using solidity interfaces
 
-The PancakeSwap v3 interfaces are available for import into solidity smart contracts
+The Leviathanswap v3 interfaces are available for import into solidity smart contracts
 via the npm artifact `@leviathanswap/core`, e.g.:
 
 ```solidity

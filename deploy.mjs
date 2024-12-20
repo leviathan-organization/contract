@@ -1,16 +1,7 @@
-#!/usr/bin/env zx
-// import 'zx/globals'
-
-const networks = {
-  hardhat: 'hardhat',
-  mantleTestnet: 'mantleTestnet',
-  mantleMainnet: 'mantleMainnet',
-  mantleSepoliaTestnet: 'mantleSepoliaTestnet',
-}
 
 let network = process.env.NETWORK
 console.log(network, 'network')
-if (!network || !networks[network]) {
+if (!network ) {
   throw new Error(`env NETWORK: ${network}`)
 }
 

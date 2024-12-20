@@ -3,9 +3,8 @@ const utils = require("../../common/utils");
 const {encodePriceSqrt} = require("../test/shared/encodePriceSqrt");
 const {formatSqrtRatioX96 } = require("../test/shared/formatSqrtRatioX96");
 
-let wmntAddress = "";
-const usdcAddress = "0x74a0E7118480bdfF5f812c7a879a41db09ac2c39"; // testnet
-// const usdcAddress = "0x201eba5cc46d216ce6dc03f6a759e8e766e956ae"; // mainnet
+let wethAddress = "";
+let leviathanAddress = "";
 
 async function main() {
   const networkName = await network.name;
@@ -19,11 +18,11 @@ async function main() {
 
   let contractAddresses = utils.getContractAddresses(networkName, "");
   console.log("contractAddresses:", contractAddresses);
-  wmntAddress = contractAddresses.WMNT;
-
-  // Leviathan/WMNT = 2
+  wethAddress = contractAddresses.WETH;
+  leviathanAddress = contractAddresses.LVTH
+  // Leviathan/WETH = 2
   let price = encodePriceSqrt(2, 1); 
-  console.log("sqrtPrice:", price);
+  console.log("sqrtPrice:", price,price.toString());
 
   let priceStr = formatSqrtRatioX96(price);
   console.log("priceStr:", priceStr);
@@ -33,16 +32,16 @@ async function main() {
     contractAddresses.NonfungiblePositionManager
   );
 
-  let token0 = wmntAddress < usdcAddress ? wmntAddress : usdcAddress;
-  let token1 = usdcAddress > wmntAddress ? usdcAddress : wmntAddress;
+  let token0 = wethAddress < leviathanAddress ? wethAddress : leviathanAddress;
+  let token1 = leviathanAddress > wethAddress ? leviathanAddress : wethAddress;
   console.log("token0:", token0);
   console.log("token1:", token1);
 
   let initPoolTx = await positionManager.createAndInitializePoolIfNecessary(
-    wmntAddress < usdcAddress ? wmntAddress : usdcAddress,
-    usdcAddress > wmntAddress ? usdcAddress : wmntAddress,
-    500,
-    price
+    wethAddress < leviathanAddress ? wethAddress : leviathanAddress,
+    leviathanAddress > wethAddress ? leviathanAddress : wethAddress,
+    "500",
+    price.toString()
   );
   console.log("initPoolTx pool success:", initPoolTx.hash);
 }
